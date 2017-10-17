@@ -1,6 +1,7 @@
+import time
+import math
 from random import  randint
 from copy import deepcopy
-import math
 
 MAX_QUEEN = 6
 MAX_T = 10000
@@ -89,8 +90,11 @@ def simulatedAnnealing() :
     global QUEEN
     getInitialBoard()
     t = 1
+    progressTime = MAX_T * 5 / 100
     while t < MAX_T :
         currentE = getEnergy(QUEEN)
+        if t % progressTime == 0 :
+            print("Progress :", t / MAX_T * 100, "Current Energy", currentE)
         nextQ = moveQueen()
         nextE = getEnergy(nextQ)
         delta = nextE - currentE
@@ -105,7 +109,6 @@ def simulatedAnnealing() :
 
 def createmap(posQ):
     matrix = [["-"] * MAX_QUEEN for i in range(MAX_QUEEN)]
-    print(posQ)
     for q in posQ:
         xx = q['posX']
         yy = q['posY']
@@ -120,6 +123,12 @@ def createmap(posQ):
             print('  -  ', end='')
         print('')
 
+MAX_QUEEN = int(input("Max Queen : "))
+MAX_T = int(input("Max T : "))
+PROB = float(input("Probability : "))
+print("Start Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
 simulatedAnnealing()
+print("Finish Time Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
+print("Final Map :")
 createmap(QUEEN)
 print(getEnergy(QUEEN))
