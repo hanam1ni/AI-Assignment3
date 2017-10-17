@@ -1,6 +1,6 @@
 import time
 import math
-from random import  randint
+from random import randint,uniform
 from copy import deepcopy
 
 MAX_QUEEN = 6
@@ -101,7 +101,7 @@ def simulatedAnnealing() :
         if delta > 0 :
             QUEEN = nextQ
         else :
-            if getProb(delta, t) < PROB :
+            if uniform(0, 1) < getProb(delta, t) :
                 QUEEN = nextQ
         if getEnergy(QUEEN) == MAX_QUEEN * MAX_QUEEN :
             break
@@ -125,7 +125,6 @@ def createmap(posQ):
 
 MAX_QUEEN = int(input("Max Queen : "))
 MAX_T = int(input("Max T : "))
-PROB = float(input("Probability : "))
 print("Start Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
 simulatedAnnealing()
 print("Finish Time Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
