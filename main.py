@@ -89,23 +89,23 @@ def getProb(delta,time) :
 def simulatedAnnealing() :
     global QUEEN
     getInitialBoard()
-    t = 1
+    T = MAX_T
     progressTime = MAX_T * 5 / 100
-    while t < MAX_T :
+    while T > 0 :
         currentE = getEnergy(QUEEN)
-        if t % progressTime == 0 :
-            print("Progress :", t / MAX_T * 100, "Current Energy", currentE)
+        if ( MAX_T - T ) % progressTime == 0 :
+            print("Progress :", int((1 - ( T  / MAX_T  )) * 100), "Current Energy", currentE)
         nextQ = moveQueen()
         nextE = getEnergy(nextQ)
         delta = nextE - currentE
         if delta > 0 :
             QUEEN = nextQ
         else :
-            if uniform(0, 1) < getProb(delta, t) :
+            if uniform(0, 1) < getProb(delta, T) :
                 QUEEN = nextQ
         if getEnergy(QUEEN) == MAX_QUEEN * MAX_QUEEN :
             break
-        t += 1
+        T -= 1
 
 def createmap(posQ):
     matrix = [["-"] * MAX_QUEEN for i in range(MAX_QUEEN)]
