@@ -98,9 +98,6 @@ def simulatedAnnealing() :
         nextQ = moveQueen()
         nextE = getEnergy(nextQ)
         delta = nextE - currentE
-        print("At T ", T)
-        print("Delta :", delta, "Current E:", currentE, "Next E :", nextE)
-        print("Probility :", getProb(delta, T))
         if delta > 0 :
             QUEEN = nextQ
         else :
