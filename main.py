@@ -3,9 +3,9 @@ import math
 from random import randint,uniform
 from copy import deepcopy
 
-MAX_QUEEN = 6
-MAX_T = 10000
-PROB = 0.8
+MAX_QUEEN = 10
+MAX_T = 100
+RATE = 0.01
 QUEEN = [{'posX': 0, 'posY': 0}]
 
 def getInitialBoard():
@@ -83,29 +83,29 @@ def moveQueen() :
             newQueen[movingQueen]['posY'] = newY
     return newQueen
 
-def getProb(delta,time) :
-    return 1 / math.exp(math.fabs(delta) / time)
+def getProb(delta,t) :
+    return 1 / math.exp(math.fabs(delta) / t)
 
 def simulatedAnnealing() :
-    global QUEEN
+    global QUEEN, RATE
     getInitialBoard()
     T = MAX_T
     progressTime = MAX_T * 5 / 100
-    while T > 0 :
+    while T > 1 :
         currentE = getEnergy(QUEEN)
-        if ( MAX_T - T ) % progressTime == 0 :
-            print("Progress :", int((1 - ( T  / MAX_T  )) * 100), "Current Energy", currentE)
         nextQ = moveQueen()
         nextE = getEnergy(nextQ)
         delta = nextE - currentE
+        if int( MAX_T - T ) % progressTime == 0 :
+            print(T, "Progress :", int((1 - ( T / MAX_T  )) * 100), "Current Energy :", currentE, "Probability :", getProb(delta,T))
         if delta > 0 :
             QUEEN = nextQ
         else :
-            if uniform(0, 1) > getProb(delta, T) :
+            if uniform(0, 1) < getProb(delta, T) :
                 QUEEN = nextQ
         if getEnergy(QUEEN) == MAX_QUEEN * MAX_QUEEN :
             break
-        T -= 1
+        T *= 1 - RATE
 
 def createmap(posQ):
     matrix = [["-"] * MAX_QUEEN for i in range(MAX_QUEEN)]
@@ -124,7 +124,8 @@ def createmap(posQ):
         print('')
 
 MAX_QUEEN = int(input("Max Queen : "))
-MAX_T = int(input("Max T : "))
+MAX_T = float(input("Initial Temp : "))
+RATE = float(input("Cooling Rate : "))
 print("Start Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
 simulatedAnnealing()
 print("Finish Time Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
