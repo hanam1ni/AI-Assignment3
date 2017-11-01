@@ -90,7 +90,10 @@ def simulatedAnnealing() :
         nextE = getEnergy(nextQ)
         delta = nextE - currentE
         if int( MAX_T - T ) % progressTime == 0 :
-            print(T, "Progress :", int((1 - ( T / MAX_T  )) * 100), "Current Energy :", currentE, "Probability :", getProb(delta,T))
+            if delta > 0:
+                print(T, "\tP: ", int((1 - ( T / MAX_T  )) * 100), "\tE: ", currentE, "\tP: Not Used")
+            else :
+                print(T, "\tP: ", int((1 - ( T / MAX_T  )) * 100), "\tE: ", currentE, "\tP: ", getProb(delta,T))
         if delta > 0 :
             QUEEN = nextQ
         else :
