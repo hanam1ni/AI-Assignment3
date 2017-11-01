@@ -15,7 +15,7 @@ def getInitialBoard():
         y = i
         flagQ = True
         for q in QUEEN:
-            if q['posX'] == x
+            if q['posX'] == x :
                 flagQ = False
         if flagQ == True:
             QUEEN.append({'posX': x, 'posY': y})
@@ -69,18 +69,11 @@ def checkSamePosition(x, y) :
     return True
 
 def moveQueen() :
-    repeat = True
     newQueen = deepcopy(QUEEN)
-    while repeat :
-        movingQueen = randint(0, MAX_QUEEN - 1)
+    movingQueen = randint(0, MAX_QUEEN - 1)
+    newQueen[movingQueen]['posX'] = (QUEEN[movingQueen]['posX'] + randint(1, MAX_QUEEN - 1)) % MAX_QUEEN
+    newQueen[movingQueen]['posY'] = movingQueen
 
-        newX = (QUEEN[movingQueen]['posX'] + (((randint(0, 1) * (MAX_QUEEN - 1)) + 1))) % MAX_QUEEN
-        newY = (QUEEN[movingQueen]['posY'] + (((randint(0, 1) * (MAX_QUEEN - 1)) + 1))) % MAX_QUEEN
-
-        if checkSamePosition(newX, newY) :
-            repeat = False
-            newQueen[movingQueen]['posX'] = newX
-            newQueen[movingQueen]['posY'] = newY
     return newQueen
 
 def getProb(delta,t) :
