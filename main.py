@@ -12,10 +12,10 @@ def getInitialBoard():
     i = 0
     while i < MAX_QUEEN - 1:
         x = randint(0, MAX_QUEEN - 1)
-        y = randint(0, MAX_QUEEN - 1)
+        y = i
         flagQ = True
         for q in QUEEN:
-            if q['posX'] == x and q['posY'] == y:
+            if q['posX'] == x
                 flagQ = False
         if flagQ == True:
             QUEEN.append({'posX': x, 'posY': y})
