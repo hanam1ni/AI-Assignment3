@@ -111,9 +111,9 @@ def simulatedAnnealing() :
     T = MAX_T
     progressTime = MAX_T * 5 / 100
     while T > 1 :
-        currentE = getEnergy(QUEEN)
+        currentE = getEnergy2(QUEEN)
         nextQ = moveQueen()
-        nextE = getEnergy(nextQ)
+        nextE = getEnergy2(nextQ)
         delta = nextE - currentE
         if int( MAX_T - T ) % progressTime == 0 :
             if delta > 0:
@@ -125,7 +125,7 @@ def simulatedAnnealing() :
         else :
             if uniform(0, 1) < getProb(delta, T) :
                 QUEEN = nextQ
-        if getEnergy(QUEEN) == MAX_QUEEN * MAX_QUEEN :
+        if getEnergy2(QUEEN) == MAX_QUEEN * MAX_QUEEN :
             break
         T *= 1 - RATE
 
@@ -153,4 +153,4 @@ simulatedAnnealing()
 print("Finish Time Time :",time.strftime("%d/%m/%Y"), time.strftime("%H:%M:%S"))
 print("Final Map :")
 createmap(QUEEN)
-print(getEnergy(QUEEN))
+print(getEnergy2(QUEEN))
