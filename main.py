@@ -21,6 +21,32 @@ def getInitialBoard():
             QUEEN.append({'posX': x, 'posY': y})
             i += 1
 
+def getEnergy2(queens):
+    queenSize = len(queens)
+    energy = 0
+    for queenIndex in range(0, queenSize):
+        queenX = queens[queenIndex]['posX']
+        queenY = queens[queenIndex]['posY']
+        for loop in range(0, queenSize):
+            if loop == queenIndex:
+                continue
+            if ((queenX == queens[loop]['posX']) or (queenY == queens[loop]['posY'])):
+                energy+=1
+                continue
+            if (queenX + queenY) == (queens[loop]['posX'] + queens[loop]['posY']):
+                energy+=1
+                continue
+            if (math.fabs(queenX - queenY)) == (math.fabs(queens[loop]['posX'] - queens[loop]['posY'])):
+                if queenX == queenY:
+                    energy+=1
+                    continue
+                if ((queenX > queenY) and (queens[loop]['posX'] > queens[loop]['posY'])):
+                    energy+=1
+                    continue
+                if ((queenX < queenY) and (queens[loop]['posX'] < queens[loop]['posY'])):
+                    energy+=1
+    return MAX_QUEEN * MAX_QUEEN - energy
+
 def getEnergy(queens):
     queenSize = len(queens)
     energy = 0
