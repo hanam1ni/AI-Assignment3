@@ -21,7 +21,7 @@ def getInitialBoard():
             QUEEN.append({'posX': x, 'posY': y})
             i += 1
 
-def getEnergy2(queens):
+def getEnergy(queens):
     queenSize = len(queens)
     energy = 0
     for queenIndex in range(0, queenSize):
@@ -44,47 +44,6 @@ def getEnergy2(queens):
                     energy+=1
                     continue
                 if ((queenX < queenY) and (queens[loop]['posX'] < queens[loop]['posY'])):
-                    energy+=1
-    return MAX_QUEEN * MAX_QUEEN - energy
-
-def getEnergy(queens):
-    queenSize = len(queens)
-    energy = 0
-    for queenIndex in range(0, queenSize):
-        queenX = queens[queenIndex]['posX']
-        queenY = queens[queenIndex]['posY']
-        for loop in range(0, queenSize):
-            if (queenX == queens[loop]['posX'] or queenY == queens[loop]['posY']) and loop != queenIndex:
-                energy+=1
-        while queenX != 0 and queenY != 0:
-            queenX-=1
-            queenY-=1
-            for loop in range(0, queenSize):
-                if (queenX == queens[loop]['posX'] and queenY == queens[loop]['posY']) and loop != queenIndex:
-                    energy+=1
-        queenX = queens[queenIndex]['posX']
-        queenY = queens[queenIndex]['posY']
-        while queenY != 0 and queenX != queenSize-1:
-            queenX+=1
-            queenY-=1
-            for loop in range(0, queenSize):
-                if (queenX == queens[loop]['posX'] and queenY == queens[loop]['posY']) and loop != queenIndex:
-                    energy+=1
-        queenX = queens[queenIndex]['posX']
-        queenY = queens[queenIndex]['posY']
-        while queenX != 0 and queenY != queenSize-1:
-            queenX-=1
-            queenY+=1
-            for loop in range(0, queenSize):
-                if (queenX == queens[loop]['posX'] and queenY == queens[loop]['posY']) and loop != queenIndex:
-                    energy+=1
-        queenX = queens[queenIndex]['posX']
-        queenY = queens[queenIndex]['posY']
-        while queenX != queenSize-1 and queenY != queenSize-1:
-            queenX+=1
-            queenY+=1
-            for loop in range(0, queenSize):
-                if (queenX == queens[loop]['posX'] and queenY == queens[loop]['posY']) and loop != queenIndex:
                     energy+=1
     return MAX_QUEEN * MAX_QUEEN - energy
 
@@ -158,3 +117,4 @@ createmap(QUEEN)
 print("Start Time :", startDate, startTime)
 print("Finish Time:", finishDate, finishTime)
 print("Final Energy: ", getEnergy(QUEEN), " / ", MAX_QUEEN * MAX_QUEEN)
+print(getEnergy(QUEEN))
