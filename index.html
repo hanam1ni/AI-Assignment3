@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+	<head>
+			<title>8-Queen Simulated Annealing</title>
+		<link rel="stylesheet" type="text/css" href="static/styles/style.css">
+		<link rel="stylesheet" type="text/css" href="static/styles/chess.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="display-wrapper">
+				<div class="board-wrapper">
+					<table id="chess-board"></table>
+					<div style="height: 30px;">
+						<span id="time-result"></span>
+					</div>	
+				</div>
+			</div>
+			<div class="input-wrapper">
+				<div class="user-wrapper">
+					<button type="button" id="decrease-button" class="value-btn" onclick="decreaseButton()">-</button>
+					<input type="text" id="input-nQueen" disabled value=5></input>
+					<button type="button" id="increase-button" class="value-btn" onclick="increaseButton()">+</button>
+					<span class="text-n-queen">N Queen</span>
+				</div>
+				<div class="user-wrapper">
+					<input type="text" class="input-box" id="input-temp" required></input>
+					<span class="text-input">Initital Temperature</span>
+				</div>
+				<div class="user-wrapper">
+					<input type="text" class="input-box" id="input-rate" required></input>
+					<span class="text-input">Cooling Rate</span>
+				</div>
+				<div class="submit-wrapper">
+					<button type="button" id="queen-submit" onClick="queenSolveRequest()">Start</button>
+					<span class="text-error">Input Error</span>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+		<script src="chessBoard.js"></script>
+		<script src="nQueenSolver.js"></script>
+	</body>
+</html>

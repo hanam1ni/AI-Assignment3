@@ -3,15 +3,11 @@ import math
 from random import randint,uniform
 from copy import deepcopy
 
-MAX_QUEEN = 10
-MAX_T = 100
-RATE = 0.01
-QUEEN = [{'posX': 0, 'posY': 0}]
-
-def getInitialBoard():
+def getInitialBoard(nQueen):
+    QUEEN = [{'posX': 0, 'posY': 0}]
     i = 0
-    while i < MAX_QUEEN - 1:
-        x = randint(0, MAX_QUEEN - 1)
+    while i < nQueen - 1:
+        x = randint(0, nQueen - 1)
         y = i
         flagQ = True
         for q in QUEEN:
@@ -20,8 +16,9 @@ def getInitialBoard():
         if flagQ == True:
             QUEEN.append({'posX': x, 'posY': y})
             i += 1
+    return QUEEN
 
-def getEnergy(queens):
+def getEnergy(queens, nQueen):
     queenSize = len(queens)
     energy = 0
     for queenIndex in range(0, queenSize):
@@ -60,7 +57,7 @@ def getEnergy(queens):
             for loop in range(0, queenSize):
                 if (queenX == queens[loop]['posX'] and queenY == queens[loop]['posY']) and loop != queenIndex:
                     energy+=1
-    return MAX_QUEEN * MAX_QUEEN - energy
+    return nQueen * nQueen - energy
 
 def checkSamePosition(x, y) :
     for q in QUEEN :
@@ -68,10 +65,10 @@ def checkSamePosition(x, y) :
             return False
     return True
 
-def moveQueen() :
+def moveQueen(QUEEN, nQueen) :
     newQueen = deepcopy(QUEEN)
-    movingQueen = randint(0, MAX_QUEEN - 1)
-    newQueen[movingQueen]['posX'] = (QUEEN[movingQueen]['posX'] + randint(1, MAX_QUEEN - 1)) % MAX_QUEEN
+    movingQueen = randint(0, nQueen - 1)
+    newQueen[movingQueen]['posX'] = (QUEEN[movingQueen]['posX'] + randint(1, nQueen - 1)) % nQueen
     newQueen[movingQueen]['posY'] = movingQueen
 
     return newQueen
@@ -79,29 +76,33 @@ def moveQueen() :
 def getProb(delta,t) :
     return 1 / math.exp(math.fabs(delta) / t)
 
-def simulatedAnnealing() :
-    global QUEEN, RATE
-    getInitialBoard()
-    T = MAX_T
-    progressTime = MAX_T * 5 / 100
-    while T > 1 :
-        currentE = getEnergy(QUEEN)
-        nextQ = moveQueen()
-        nextE = getEnergy(nextQ)
-        delta = nextE - currentE
-        if int( MAX_T - T ) % progressTime == 0 :
-            if delta > 0:
-                print(T, "\tP: ", int((1 - ( T / MAX_T  )) * 100), "\tE: ", currentE, "\tP: Not Used")
-            else :
-                print(T, "\tP: ", int((1 - ( T / MAX_T  )) * 100), "\tE: ", currentE, "\tP: ", getProb(delta,T))
-        if delta > 0 :
-            QUEEN = nextQ
-        else :
-            if uniform(0, 1) < getProb(delta, T) :
+def simulatedAnnealing(rate, initTemp, nQueen) :
+    if nQueen != 1 :
+        startTime = time.time()
+        QUEEN = getInitialBoard(nQueen)
+        T = initTemp
+        progressTime = initTemp * 5 / 100
+        while T > 1 :
+            currentE = getEnergy(QUEEN, nQueen)
+            nextQ = moveQueen(QUEEN, nQueen)
+            nextE = getEnergy(nextQ, nQueen)
+            delta = nextE - currentE
+            if int( initTemp - T ) % progressTime == 0 :
+                if delta > 0:
+                    print(T, "\tP: ", int((1 - ( T / initTemp  )) * 100), "\tE: ", currentE, "\tP: Not Used")
+                else :
+                    print(T, "\tP: ", int((1 - ( T / initTemp  )) * 100), "\tE: ", currentE, "\tP: ", getProb(delta,T))
+            if delta > 0 :
                 QUEEN = nextQ
-        if getEnergy(QUEEN) == MAX_QUEEN * MAX_QUEEN :
-            break
-        T *= 1 - RATE
+            else :
+                if uniform(0, 1) < getProb(delta, T) :
+                    QUEEN = nextQ
+            if getEnergy(QUEEN, nQueen) == nQueen * nQueen :
+                break
+            T *= 1 - rate
+        timeElapsed = time.time() - startTime
+        return {'solution': QUEEN, 'timeElapsed': timeElapsed}
+    return 0
 
 def createmap(posQ):
     matrix = [["-"] * MAX_QUEEN for i in range(MAX_QUEEN)]
@@ -119,16 +120,8 @@ def createmap(posQ):
             print('  -  ', end='')
         print('')
 
-MAX_QUEEN = int(input("Max Queen : "))
-MAX_T = float(input("Initial Temp : "))
-RATE = float(input("Cooling Rate : "))
-startDate = time.strftime("%d/%m/%Y")
-startTime = time.strftime("%H:%M:%S")
-simulatedAnnealing()
-finishDate = time.strftime("%d/%m/%Y")
-finishTime = time.strftime("%H:%M:%S")
-print("Final Map :")
-createmap(QUEEN)
-print("Start Time :", startDate, startTime)
-print("Finish Time:", finishDate, finishTime)
-print("Final Energy: ", getEnergy(QUEEN), " / ", MAX_QUEEN * MAX_QUEEN)
+if __name__ == "__main__":
+    startDate = time.strftime("%d/%m/%Y")
+    startTime = time.strftime("%H:%M:%S")
+    finishDate = time.strftime("%d/%m/%Y")
+    finishTime = time.strftime("%H:%M:%S")

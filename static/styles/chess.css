@@ -1,0 +1,42 @@
+#chess-board {
+    position: relative;
+}
+
+#chess-board tr td {
+    height: 60px;
+    width: 60px;
+    animation: fade-in 0.5s;
+}
+
+#chess-board tr:nth-child(odd) td:nth-child(even) {
+    background: rgb(208, 139, 71);
+}
+
+#chess-board tr:nth-child(odd) td:nth-child(odd) {
+    background: rgb(255, 206, 157);
+}
+
+#chess-board tr:nth-child(even) td:nth-child(odd) {
+    background: rgb(208, 139, 71);
+}
+
+#chess-board tr:nth-child(even) td:nth-child(even) {
+    background: rgb(255, 206, 157);
+}
+
+.cell-table {
+    
+}
+
+.queen-piece {
+    position: absolute;
+    transform: translate(25%,0%);
+    width: 45px;
+    height: 60px;
+    animation: fade-in 1s;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
