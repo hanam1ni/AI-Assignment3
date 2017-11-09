@@ -6,6 +6,7 @@ function queenSolveRequest() {
     var coolRate = $("#input-rate").val()
     if(initTemp !== '' && coolRate !== '') {
         $('#time-result').css({'visibility': 'hidden'});
+        $('#energy-result').css({'visibility': 'hidden'});
         $('.text-error').css({'display': 'none'});
         var requestData = {
             'nQueen': nQueen,
@@ -29,6 +30,19 @@ function queenSolveRequest() {
                 timeElapsed = Math.round(jsonData.timeElapsed * 10000000) / 10000000                
                 resultText = "Time Elasped " + timeElapsed + " Seconds"
                 document.getElementById("time-result").innerHTML = resultText;
+                if (nQueen * nQueen === jsonData.energy) {
+                    document.getElementById("energy-result").innerHTML = "Success with " + jsonData.energy + " Energy";
+                    $('#energy-result').css({
+                        'visibility': 'visible',
+                        'color': '#4cc77d'
+                    });
+                } else {
+                    document.getElementById("energy-result").innerHTML = "Failed with " + jsonData.energy + " Energy";
+                    $('#energy-result').css({
+                        'visibility': 'visible',
+                        'color': 'rgb(253, 71, 71)'
+                    });
+                }
                 $('#time-result').css({'visibility': 'visible'});
                 $('.input-box').prop('disabled', false)
                 $('#queen-submit').prop('disabled', false)

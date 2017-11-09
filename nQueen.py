@@ -62,9 +62,9 @@ def getProb(delta,t) :
     return 1 / math.exp(math.fabs(delta) / t)
 
 def simulatedAnnealing(rate, initTemp, nQueen) :
+    QUEEN = getInitialBoard(nQueen)
     if nQueen != 1 :
         startTime = time.time()
-        QUEEN = getInitialBoard(nQueen)
         T = initTemp
         progressTime = initTemp * 5 / 100
         while T > 1 :
@@ -86,8 +86,9 @@ def simulatedAnnealing(rate, initTemp, nQueen) :
                 break
             T *= 1 - rate
         timeElapsed = time.time() - startTime
-        return {'solution': QUEEN, 'timeElapsed': timeElapsed}
-    return 0
+        energy = getEnergy(QUEEN, nQueen)
+        return {'solution': QUEEN, 'timeElapsed': timeElapsed, 'energy': energy }
+    return {'solution': QUEEN, 'timeElapsed': 0, 'energy': 1 }
 
 def createmap(posQ):
     matrix = [["-"] * MAX_QUEEN for i in range(MAX_QUEEN)]

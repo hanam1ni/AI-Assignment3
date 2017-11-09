@@ -16,6 +16,7 @@ body {
     margin-top: 100px;
     border-radius: 5px;
     background-color: rgba(0,0,0,0.6);
+    padding: 10px;
 }
 
 .display-wrapper {
@@ -172,6 +173,12 @@ body {
 }
 
 #time-result {
+    visibility: hidden;
+    color: white;
+    font-size: 18px;
+}
+
+#energy-result {
     visibility: hidden;
     color: white;
     font-size: 18px;

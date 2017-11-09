@@ -1,6 +1,9 @@
 function decreaseButton() {
     var inputVal = parseInt($("#input-nQueen").val());
-    if (inputVal > 4) {
+    $('#time-result').css({'visibility': 'hidden'});
+    $('#energy-result').css({'visibility': 'hidden'});
+    $('.text-error').css({'display': 'none'});
+    if (inputVal > 1) {
         $("#input-nQueen").val(inputVal - 1);
         renderTable(inputVal - 1)
         $('.text-error').css({'display': 'none'});
@@ -9,6 +12,9 @@ function decreaseButton() {
 
 function increaseButton() {
     var inputVal = parseInt($("#input-nQueen").val());
+    $('#time-result').css({'visibility': 'hidden'});
+    $('#energy-result').css({'visibility': 'hidden'});
+    $('.text-error').css({'display': 'none'});
     if (inputVal < 10) {
         $("#input-nQueen").val(inputVal + 1);
         renderTable(inputVal + 1)
